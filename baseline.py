@@ -106,8 +106,8 @@ def train():
     epochs = 100
     batch_size = 128
     save_path = 'out/dsi'
-    model = AutoModelForSeq2SeqLM.from_pretrained('models/t5-base')
-    tokenizer = AutoTokenizer.from_pretrained('models/t5-base')
+    model = AutoModelForSeq2SeqLM.from_pretrained('t5-base')
+    tokenizer = AutoTokenizer.from_pretrained('t5-base')
 
     num_of_new_tokens = 10  # 109739
 
@@ -115,11 +115,11 @@ def train():
     model.resize_token_embeddings(len(tokenizer))
 
     data = json.load(open('dataset/nq320k/train.json'))
-    data.extend(json.load(open('dataset/nq320k/qg.json')))
+    data.extend(json.load(open('dataset/nq320k/train.json.qg.json')))
 
-    corpus = json.load(open('dataset/nq320k_id/id.random2.json'))
-    corpus = [''.join([f'${i}$' for i in z]) for z in corpus]
-    corpus = [f'${z}$' for z in corpus]
+    corpus = json.load(open('dataset/nq320k/corpus_lite.json'))
+    # corpus = [''.join([f'${i}$' for i in z]) for z in corpus]
+    # corpus = [f'${z}$' for z in corpus]
 
     optimizer = AdamW(model.parameters(), 5e-4)
 
